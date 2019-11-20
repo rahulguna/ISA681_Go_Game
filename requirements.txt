@@ -8,6 +8,6 @@ django-webpack-loader==0.3.3
 djangorestframework==3.9.1
 pep8==1.7.0
 six==1.10.0
-twisted==19.7.0
+twisted==19.10.0
 txaio==2.5.1
 zope.interface==4.4.2
