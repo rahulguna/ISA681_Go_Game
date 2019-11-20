@@ -21,7 +21,7 @@ class HomeView(TemplateView):
         # if logged in, send them to the lobby
         if request.user.is_authenticated:
             return redirect('/lobby/')
-        super(HomeView, self).dispatch(request, *args, **kwargs)
+        return super(HomeView, self).dispatch(request, *args, **kwargs)
 
 
 class CreateUserView(CreateView):
