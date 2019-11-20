@@ -3,7 +3,7 @@ autobahn==0.16.0
 autopep8==1.2.4
 channels==0.17.2
 daphne==0.15.0
-Django==1.11.19
+Django==1.11.23
 django-webpack-loader==0.3.3
 djangorestframework==3.9.1
 pep8==1.7.0
