@@ -3,11 +3,11 @@ autobahn==0.16.0
 autopep8==1.2.4
 channels==0.17.2
 daphne==0.15.0
-django==1.11.23
-django-webpack-loader==0.3.3
+django==2.2.6
 djangorestframework==3.9.1
+django-webpack-loader==0.6.0
 pep8==1.7.0
 six==1.10.0
-twisted==19.7.0
 txaio==2.5.1
+twisted==19.10.0
 zope.interface==4.4.2

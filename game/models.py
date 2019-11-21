@@ -8,13 +8,13 @@ from datetime import datetime
 
 class Game(models.Model):
     winner = models.ForeignKey(
-        User, related_name='winner', null=True, blank=True)
-    creator = models.ForeignKey(User, related_name='creator')
+        User, related_name='winner', null=True, blank=True, on_delete=models.DO_NOTHING)
+    creator = models.ForeignKey(User, related_name='creator', on_delete=models.DO_NOTHING)
     opponent = models.ForeignKey(
-        User, related_name='opponent', null=True, blank=True)
+        User, related_name='opponent', null=True, blank=True, on_delete=models.DO_NOTHING)
     cols = models.IntegerField(default=6)
     rows = models.IntegerField(default=6)
-    current_turn = models.ForeignKey(User, related_name='current_turn')
+    current_turn = models.ForeignKey(User, related_name='current_turn', on_delete=models.DO_NOTHING)
 
     # dates
     completed = models.DateTimeField(null=True, blank=True)
@@ -156,8 +156,8 @@ class GameSquare(models.Model):
         ('Selected', 'Selected'),
         ('Surrounding', 'Surrounding')
     )
-    game = models.ForeignKey(Game)
-    owner = models.ForeignKey(User, null=True, blank=True)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, null=True, blank=True, on_delete=models.DO_NOTHING)
     status = models.CharField(choices=STATUS_TYPES,
                               max_length=25,
                               default='Free')
@@ -230,9 +230,9 @@ class GameSquare(models.Model):
 
 
 class GameLog(models.Model):
-    game = models.ForeignKey(Game)
+    game = models.ForeignKey(Game, on_delete=models.DO_NOTHING)
     text = models.CharField(max_length=300)
-    player = models.ForeignKey(User, null=True, blank=True)
+    player = models.ForeignKey(User, null=True, blank=True, on_delete=models.DO_NOTHING)
 
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)

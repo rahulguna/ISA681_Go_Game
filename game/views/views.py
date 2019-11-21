@@ -23,7 +23,6 @@ class HomeView(TemplateView):
             return redirect('/lobby/')
         return super(HomeView, self).dispatch(request, *args, **kwargs)
 
-
 class CreateUserView(CreateView):
     template_name = 'register.html'
     form_class = UserCreationForm
