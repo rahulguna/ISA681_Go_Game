@@ -14,7 +14,7 @@ const cell = {
 };
 
 const coordinates = {
-    fontSize: '10px',
+    fontSize: '9px',
     textAlign: 'center'
 };
 
@@ -107,7 +107,6 @@ class GameSquare extends Component {
         return (
             <td onClick={this.squareClicked} height="30" width="30" style={cell}>
                 {this.getStatus()}
-                
             </td>
         )
     }

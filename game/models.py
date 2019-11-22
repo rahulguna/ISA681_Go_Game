@@ -81,7 +81,7 @@ class Game(models.Model):
         """
         Gets all of the squares for this Game
         """
-        return GameSquare.objects.filter(game=self)
+        return GameSquare.objects.filter(game=self).order_by('id')
 
     def get_game_square(row, col):
         """
