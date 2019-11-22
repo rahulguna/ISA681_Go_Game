@@ -1,12 +1,33 @@
 import React, {Component, PropTypes} from 'react'
 
-const creator_icon = <img src="/static/img/blue-player.png" />
-const creator_surround_icon = <img src="/static/img/blue-surrounding.png"/>
-const opponent_icon = <img src="/static/img/red-player.png" />
-const opponent_surround_icon = <img src="/static/img/red-surrounding.png"/>
-const empty_icon = <img src="/static/img/empty.png" />
+
+const creator_icon = <div>O</div>
+const creator_surround_icon = <div>O</div>
+const opponent_icon = <div>X</div>
+const opponent_surround_icon = <div>X</div>
+const empty_icon = <div></div>
+
+const cell = {
+    'padding-left': '9px',
+    'background-color': '#b9b9b7',
+    'border': '1px solid #333'
+};
+
+const coordinates = {
+    fontSize: '10px',
+    textAlign: 'center'
+};
+
+const yellow = {
+      'background-color': 'yellow',
+};
+
+const black = {
+      'background-color': 'black',
+};
 
 class GameSquare extends Component {
+
     constructor(props) {
         super(props)
         this.state = {
@@ -84,9 +105,9 @@ class GameSquare extends Component {
    
     render() {
         return (
-            <td onClick={this.squareClicked} height="60" width="60">
+            <td onClick={this.squareClicked} height="30" width="30" style={cell}>
                 {this.getStatus()}
-                <div className="coords">({this.props.loc_x}, {this.props.loc_y}) </div>
+                
             </td>
         )
     }

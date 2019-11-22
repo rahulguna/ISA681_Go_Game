@@ -12,8 +12,8 @@ class Game(models.Model):
     creator = models.ForeignKey(User, related_name='creator', on_delete=models.DO_NOTHING)
     opponent = models.ForeignKey(
         User, related_name='opponent', null=True, blank=True, on_delete=models.DO_NOTHING)
-    cols = models.IntegerField(default=6)
-    rows = models.IntegerField(default=6)
+    cols = models.IntegerField(default=9)
+    rows = models.IntegerField(default=9)
     current_turn = models.ForeignKey(User, related_name='current_turn', on_delete=models.DO_NOTHING)
 
     # dates

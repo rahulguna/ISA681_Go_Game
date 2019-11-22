@@ -29,6 +29,7 @@
         "webpack-dev-server": "^3.9.0"
     },
     "scripts": {
+        "start": "webpack --progress -p --config webpack.config.js --watch",
         "webpack": "webpack --watch"
     },
     "author": "",
