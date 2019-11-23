@@ -1,5 +1,9 @@
 import React from 'react'
 
+const paddingbottom = {
+  'padding-bottom':'20px',
+};
+
 class PlayerGames extends React.Component{
   constructor(props) {
       super(props)
@@ -45,7 +49,7 @@ class PlayerGames extends React.Component{
     renderGameList(){
         if (this.props.game_list.length > 0){
             return this.props.game_list.map(function(game){
-                    return <li key={game.id} className="list-group-item">
+                    return <li key={game.id} className="list-group-item" style={paddingbottom}>
                                 <span className="badge pull-left">{game.id}</span>&nbsp;&nbsp;
                                 <span>{game.creator.username}</span> vs <span>{this.renderOpponent(game)}</span>
 

@@ -185,15 +185,13 @@ class GameSquare(models.Model):
         """
         # TODO:
         # http://stackoverflow.com/questions/2373306/pythonic-and-efficient-way-of-finding-adjacent-cells-in-grid
-        ajecency_matrix = [(i, j) for i in (-1, 0, 1)
-                           for j in (-1, 0, 1) if not (i == j == 0)]
         results = []
-        for dx, dy in ajecency_matrix:
-            # boundaries check
-            if 0 <= (self.col + dy) < self.game.cols and 0 <= self.row + dx < self.game.rows:
-                # yield grid[x_coord + dx, y_coord + dy]
-                results.append((self.col + dy, self.row + dx))
+        
+        print(self.row)
+        print(self.col) 
+
         return results
+
 
     def claim(self, status_type, user):
         """
@@ -206,14 +204,14 @@ class GameSquare(models.Model):
         # get surrounding squares and update them if they can be updated
         surrounding = self.get_surrounding()
 
-        for coords in surrounding:
+        #for coords in surrounding:
             # get square by coords
-            square = self.game.get_square_by_coords(coords)
+        #    square = self.game.get_square_by_coords(coords)
 
-            if square and square.status == 'Free':
-                square.status = 'Surrounding'
-                square.owner = user
-                square.save()
+        #    if square and square.status == 'Free':
+        #        square.status = 'Surrounding'
+        #        square.owner = user
+        #        square.save()
 
         # add log entry for move
         self.game.add_log('Square claimed at ({0}, {1}) by {2}'

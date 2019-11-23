@@ -4,6 +4,11 @@ import GameLog from './GameLog'
 import $ from 'jquery'
 import Websocket from 'react-websocket'
 
+const button = {
+    'padding-top':'20px',
+    'padding-left':'100px',
+};
+
 class GameBoard extends Component {
     // lifecycle methods
     constructor(props) {
@@ -153,20 +158,26 @@ class GameBoard extends Component {
     render() {
         return (
             <div className="row">
-                <div className="col-sm-6"> 
+                <div className="col-sm-1"></div> 
+                <div className="col-sm-5"> 
                     {this.currentTurn()}
                     <table>
                         <tbody>
                         { this.renderBoard() }
                         </tbody>
                     </table>
+                    <div className="input-group" style={button}>
+                        <span className="input-group-btn">
+                            <button className="btn btn-default" type="button">Pass</button>
+                        </span>
+                    </div>
                 </div>
-            <div className="col-sm-6">
-             <GameLog sendSocketMessage={this.sendSocketMessage} 
-                         log_entries={this.state.log}
-                         game_id={this.props.game_id} />
-            </div>   
-            <Websocket ref="socket" url={this.props.socket}
+                <div className="col-sm-6">
+                 <GameLog sendSocketMessage={this.sendSocketMessage} 
+                             log_entries={this.state.log}
+                             game_id={this.props.game_id} />
+                </div>   
+                <Websocket ref="socket" url={this.props.socket}
                     onMessage={this.handleData.bind(this)} reconnect={true}/>
             </div>
         )

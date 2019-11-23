@@ -8,7 +8,7 @@ const opponent_surround_icon = <div>X</div>
 const empty_icon = <div></div>
 
 const cell = {
-    'padding-left': '9px',
+    'padding-left': '8px',
     'background-color': '#b9b9b7',
     'border': '1px solid #333'
 };
