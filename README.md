@@ -1,7 +1,3 @@
-# go_game
-A simple game of Obstruction created to explore Django + Django Channels + ReactJS
-Blog Post and Tutorial at: [http://www.codyparker.com/django-channels-with-react](http://www.codyparker.com/django-channels-with-react)
-
 ## Requirements
 
 * Django >= 1.9
