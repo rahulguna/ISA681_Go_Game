@@ -216,15 +216,13 @@ class GameSquare(models.Model):
         # http://stackoverflow.com/questions/2373306/pythonic-and-efficient-way-of-finding-adjacent-cells-in-grid
         results = []
         
-        #if self.row==3 and self.col==8:
-        #    GameSquare.objects.filter(game=self).order_by('id')
-        #    self.row = '4'; 
-        #    self.col = '8';
-        #    self.status = 'Free'
-        #    self.owner = self.game.current_turn
-        #    self.save(update_fields=['row','col','status', 'owner'])
-        #    print(self.row)
-        #    print(self.col)
+        if self.row==3 and self.col==5:
+            gamesq = GameSquare.objects.get(game=self.game, row=4, col=5)
+            gamesq.status = 'Free'
+            gamesq.owner = None
+            gamesq.save(update_fields=['status', 'owner'])
+            self.game.add_log('Square at ({0}, {1}) is captured by {2}'
+                          .format(gamesq.col, gamesq.row, self.owner.username))
 
         return results
 
