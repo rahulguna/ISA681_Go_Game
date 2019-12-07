@@ -14,7 +14,9 @@ class Game(models.Model):
         User, related_name='opponent', null=True, blank=True, on_delete=models.DO_NOTHING)
     cols = models.IntegerField(default=9)
     rows = models.IntegerField(default=9)
+    score = models.IntegerField(null=True, blank=True)
     current_turn = models.ForeignKey(User, related_name='current_turn', on_delete=models.DO_NOTHING)
+    pass_chance = models.ForeignKey(User, related_name='pass_chance',null=True, blank=True, on_delete=models.DO_NOTHING)
 
     # dates
     completed = models.DateTimeField(null=True, blank=True)
@@ -27,6 +29,11 @@ class Game(models.Model):
     @staticmethod
     def get_available_games():
         return Game.objects.filter(opponent=None, completed=None)
+
+    @staticmethod
+    def get_past_games(user):
+        from django.db.models import Q
+        return Game.objects.filter(~Q(completed=None) | Q(opponent=user) | Q(creator=user))
 
     @staticmethod
     def created_count(user):
@@ -149,6 +156,28 @@ class Game(models.Model):
         self.completed = datetime.now()
         self.save()
 
+    def passChance(self, user):
+        """
+        Claims the square for the user
+        """
+        if(self.pass_chance == None or self.pass_chance.id == user.id):
+            self.pass_chance = user
+            self.save(update_fields=['pass_chance'])
+            self.add_log('{0} has passed his turn'.format(user.username))
+            self.next_player_turn()
+            self.send_game_update()
+        elif(self.pass_chance != None and self.pass_chance.id != user.id):
+            creator_count = self.get_all_game_squares().filter(owner=self.creator).count()
+            opponent_count = self.get_all_game_squares().filter(owner=self.opponent).count()
+            if(creator_count>opponent_count):
+                self.winner = self.creator
+                self.score = creator_count
+            else:
+                self.winner = self.opponent
+                self.score = opponent_count
+            self.completed = datetime.now()
+            self.save()
+            self.send_game_update()
 
 class GameSquare(models.Model):
     STATUS_TYPES = (
@@ -187,8 +216,15 @@ class GameSquare(models.Model):
         # http://stackoverflow.com/questions/2373306/pythonic-and-efficient-way-of-finding-adjacent-cells-in-grid
         results = []
         
-        print(self.row)
-        print(self.col) 
+        #if self.row==3 and self.col==8:
+        #    GameSquare.objects.filter(game=self).order_by('id')
+        #    self.row = '4'; 
+        #    self.col = '8';
+        #    self.status = 'Free'
+        #    self.owner = self.game.current_turn
+        #    self.save(update_fields=['row','col','status', 'owner'])
+        #    print(self.row)
+        #    print(self.col)
 
         return results
 

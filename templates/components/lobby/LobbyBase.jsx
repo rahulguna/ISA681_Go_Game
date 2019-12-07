@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PlayerGames from './PlayerGames'
 import AvailableGames from './AvailableGames'
+import PastGames from './PastGames'
 import Websocket from 'react-websocket'
 import $ from 'jquery'
 
@@ -11,7 +12,8 @@ class LobbyBase extends React.Component {
         super(props);
         this.state = {
             player_game_list: [],
-            available_game_list: []
+            available_game_list: [],
+            past_game_list: []
         }
 
         // bind button click
@@ -34,9 +36,18 @@ class LobbyBase extends React.Component {
         }.bind(this))
     }
 
+    getPastGames(){
+        this.serverRequest = $.get('http://localhost:8080/past-games/?format=json', function (result) {
+           this.setState({
+            past_game_list: result
+             })
+        }.bind(this))
+    }
+
     componentDidMount() {
        this.getPlayerGames()
        this.getAvailableGames()
+       this.getPastGames()
         
         
     }
@@ -52,6 +63,8 @@ class LobbyBase extends React.Component {
         this.getPlayerGames()
         // we've received an updated list of available games
         this.setState({available_game_list: result})
+        // we've received an updated list of past games
+        this.setState({past_game_list: result})
     }
 
     sendSocketMessage(message){
@@ -70,6 +83,10 @@ class LobbyBase extends React.Component {
                 </div>
                  <div className="col-lg-4">
                      <AvailableGames player={this.props.current_user} game_list={this.state.available_game_list}
+                                     sendSocketMessage={this.sendSocketMessage} />
+                </div>
+                <div className="col-lg-4">
+                     <PastGames player={this.props.current_user} game_list={this.state.past_game_list}
                                      sendSocketMessage={this.sendSocketMessage} />
                 </div>
                 <Websocket ref="socket" url={this.props.socket}

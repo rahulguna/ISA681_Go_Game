@@ -3,6 +3,9 @@ import React from 'react'
 const paddingbottom = {
   'padding-bottom':'20px',
 };
+const marginTop = {
+  'margin-top':'5px',
+};
 
 class PlayerGames extends React.Component{
   constructor(props) {
@@ -47,10 +50,14 @@ class PlayerGames extends React.Component{
     }
 
     renderGameList(){
-        if (this.props.game_list.length > 0){
-            return this.props.game_list.map(function(game){
+        let player_removed = this.props.game_list.filter(function(game) {
+            return game.winner == null
+        }, this);
+
+        if (player_removed.length > 0){
+            return player_removed.map(function(game){
                     return <li key={game.id} className="list-group-item" style={paddingbottom}>
-                                <span className="badge pull-left">{game.id}</span>&nbsp;&nbsp;
+                                <span className="badge pull-left" style={marginTop}>{game.id}</span>&nbsp;&nbsp;
                                 <span>{game.creator.username}</span> vs <span>{this.renderOpponent(game)}</span>
 
                                 <a className="btn btn-sm btn-primary pull-right" href={"/game/"+game.id+"/"}>{this.renderButton(game)}</a>
@@ -67,7 +74,7 @@ class PlayerGames extends React.Component{
         <div>
           <div className="panel panel-primary">
                 <div className="panel-heading">
-                    <span>Your Games</span>
+                    <span>Current Games</span>
                     <a href="#" className="pull-right badge" onClick={this.onCreateGameClick} id="create_game">Start New Game</a>
                 </div>
                 <div className="panel-body">

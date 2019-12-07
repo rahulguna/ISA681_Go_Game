@@ -13,7 +13,7 @@ class GameSerializer(serializers.ModelSerializer):
     class Meta:
         model = Game
         fields = ('id', 'winner', 'creator', 'opponent', 'cols', 
-                  'rows', 'completed', 'created', 'current_turn')
+                  'rows', 'completed', 'created', 'current_turn', 'score', 'pass_chance')
         depth = 1
 
 

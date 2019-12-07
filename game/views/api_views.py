@@ -37,6 +37,16 @@ class AvailableGameViewSet(viewsets.ViewSet):
         serializer = GameSerializer(queryset, many=True)
         return Response(serializer.data)
 
+class PastGameViewSet(viewsets.ViewSet):
+    """
+    API endpoint for available/open games
+    """
+
+    def list(self, request):
+        queryset = Game.get_past_games(self.request.user)
+        serializer = GameSerializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class CurrentUserView(APIView):
 

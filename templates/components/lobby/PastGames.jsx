@@ -7,7 +7,7 @@ const marginTop = {
   'margin-top':'5px',
 };
 
-class AvailableGames extends React.Component {
+class PastGames extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -25,7 +25,7 @@ class AvailableGames extends React.Component {
     renderGameList() {
         // clear out games owned by this player
         let player_removed = this.props.game_list.filter(function(game) {
-            return game.creator.id !== this.props.player.id
+            return game.winner !== null
         }, this);
         
         
@@ -33,13 +33,13 @@ class AvailableGames extends React.Component {
             return player_removed.map(function (game) {
                     return <li key={game.id} className="list-group-item" style={paddingbottom}>
                         <span className="badge pull-left" style={marginTop}>{game.id}</span>&nbsp; &nbsp;
-                        <span>{game.creator.username} vs???</span>
-                        <a className="btn btn-sm btn-primary pull-right" href={"/game/"+game.id+"/"}>Join</a>
+                        <span>{game.creator.username} vs {game.opponent.username}</span>
+                        <a className="btn btn-sm btn-primary pull-right" href={"/game/"+game.id+"/"}>View</a>
                     </li>
             }, this)
 
         } else {
-            return ("No Available Games")
+            return ("No Past Games")
         }
     }
 
@@ -48,7 +48,7 @@ class AvailableGames extends React.Component {
             <div>
                 <div className="panel panel-primary">
                     <div className="panel-heading">
-                        <span>Available Games</span>
+                        <span>Past Games</span>
                     </div>
                     <div className="panel-body">
                         <div>
@@ -64,16 +64,16 @@ class AvailableGames extends React.Component {
     }
 }
 
-AvailableGames.defaultProps = {
+PastGames.defaultProps = {
 
 };
 
-AvailableGames.propTypes = {
+PastGames.propTypes = {
     game_list: React.PropTypes.array,
     player: React.PropTypes.object
 
 };
 
 
-export default AvailableGames
+export default PastGames
 

@@ -88,6 +88,12 @@ class GameConsumer(JsonWebsocketConsumer):
             game.add_log(content['text'], self.message.user)
             game.send_game_update()
 
+        if action == 'pass_chance':
+            # get the square object
+            game = Game.get_by_id(content['game_id'])
+            game.passChance(self.message.user)
+            game.send_game_update()
+
     def disconnect(self, message, **kwargs):
         """
         Perform things on connection close

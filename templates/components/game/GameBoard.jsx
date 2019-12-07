@@ -8,6 +8,21 @@ const button = {
     'padding-top':'20px',
     'padding-left':'100px',
 };
+const paddingTop = {
+    'padding-top':'50px',
+};
+const paddingLeft = {
+    'padding-left':'30px',
+};
+const noPadding = {
+    'padding':'0px',
+};
+const paddingBottom = {
+    'padding-bottom':'10px',
+};
+const fontColor = {
+    'color':'red',
+};
 
 class GameBoard extends Component {
     // lifecycle methods
@@ -22,6 +37,7 @@ class GameBoard extends Component {
         // bind button click
         this.sendSocketMessage = this.sendSocketMessage.bind(this)
         this.isPlayerTurn = this.isPlayerTurn.bind(this)
+        this.passChance = this.passChance.bind(this)
     }
 
     componentDidMount() {
@@ -145,34 +161,63 @@ class GameBoard extends Component {
         if (this.state.game){
             if (this.state.game.completed != null){
                 // game is over
-                return <h3>The Winner: <span className="text-primary">{(this.state.game.current_turn.username)}</span></h3>
+                return <div> 
+                    <h4>Winner: <span className="text-primary">{(this.state.game.winner.username)}</span></h4>
+                    <h4>Score: <span className="text-primary">{(this.state.game.score)}</span></h4>
+                    </div>
             }else{
-                return <h3>Current Turn: 
-                    <span className="text-primary">{(this.state.game.current_turn.username)}</span>
-                 </h3>
+                return <div>
+                        <h4>Current Turn:&nbsp;&nbsp;
+                            <span className="text-primary">{(this.state.game.current_turn.username)}</span>
+                        </h4>
+                        <div className="col-sm-5" style={noPadding}>
+                            <h4>Pass Your turn:</h4>
+                        </div> 
+                        <div className="col-sm-7" style={noPadding}>
+                            <span className="input-group-btn">
+                                <button className="btn btn-default" onClick={this.passChance} type="button">Pass</button>
+                            </span>
+                        </div> 
+                    </div>
             }
             
         }
     }
 
+    passTurn(){
+        if (this.state.game){
+            if (this.state.game.pass_chance != null && this.state.game.completed == null){
+                // game is over
+                return <h4 style={fontColor}>{(this.state.game.pass_chance.username)} has passed the turn</h4>
+            }
+        }
+    }
+
+    passChance(){
+        // make the user that clicked, the owner and claim the surrounding spots that are available
+        this.sendSocketMessage({action: "pass_chance", 
+                                      game_id: this.props.game_id })
+    }
+
     render() {
         return (
             <div className="row">
-                <div className="col-sm-1"></div> 
-                <div className="col-sm-5"> 
+                <div className="col-sm-4" style={paddingLeft}>
+                    <h3 style={paddingBottom}>Game Info</h3>
                     {this.currentTurn()}
+                    <div className="col-sm-12" style={noPadding}>
+                        {this.passTurn()} 
+                    </div>
+                </div> 
+                <div className="col-sm-4"> 
+                    <div style={paddingTop}></div>
                     <table>
                         <tbody>
                         { this.renderBoard() }
                         </tbody>
                     </table>
-                    <div className="input-group" style={button}>
-                        <span className="input-group-btn">
-                            <button className="btn btn-default" type="button">Pass</button>
-                        </span>
-                    </div>
                 </div>
-                <div className="col-sm-6">
+                <div className="col-sm-4">
                  <GameLog sendSocketMessage={this.sendSocketMessage} 
                              log_entries={this.state.log}
                              game_id={this.props.game_id} />
@@ -188,7 +233,6 @@ GameBoard.propTypes = {
     game_id: PropTypes.number,
     socket: PropTypes.string,
     current_user: PropTypes.object
-    
 }
 
 export default GameBoard

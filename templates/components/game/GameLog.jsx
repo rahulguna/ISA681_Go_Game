@@ -1,5 +1,15 @@
 import React, {Component, PropTypes} from 'react'
 
+const paddingBottom = {
+    'padding-bottom':'15px',
+};
+const scrollrable = {
+    'max-height': '288px',
+    'position': 'relative',
+    'z-index': '10',
+    'overflow-y': 'scroll',
+};
+
 class GameLog extends Component {
 
     constructor(props) {
@@ -30,7 +40,7 @@ class GameLog extends Component {
                  <span className="badge pull-left player-badge ">
                         {log_sender}
                 </span>
-                        <span>{entry.text}</span>
+                        &nbsp;&nbsp;<span>{entry.text}</span>
                 </li>  
     }
 
@@ -59,18 +69,19 @@ class GameLog extends Component {
 
     render () {
         return (
-            <div >
-                <h3>Game Log</h3>
-               <ul className="list-group">
-                    { this.renderLog() }
-                </ul>
-                <div className="input-group">
-                    <input ref="log_chat" type="text" className="form-control" placeholder="Type to chat..."/>
-                    <span className="input-group-btn">
-                        <button onClick={this.sayIt} className="btn btn-default" type="button">Say It</button>
-                    </span>
+            <div>
+                <h3>Log</h3>
+                <div className="input-group" style={paddingBottom}>
+                        <input ref="log_chat" type="text" className="form-control" placeholder="Type to chat..."/>
+                        <span className="input-group-btn">
+                            <button onClick={this.sayIt} className="btn btn-default" type="button">Say It</button>
+                        </span>
                 </div>
-             
+                <div style={scrollrable}>
+                    <ul className="list-group">
+                        { this.renderLog() }
+                    </ul>
+                </div>
             </div>
         )
     }

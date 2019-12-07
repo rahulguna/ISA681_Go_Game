@@ -49,6 +49,7 @@ class LobbyView(TemplateView):
 
         # we're creating a list of games that contains just the id (for the link) and the creator
         available_games = [{'creator': game.creator.username, 'id': game.pk} for game in Game.get_available_games()]
+        past_games = Game.get_available_games()
         # for the player's games, we're returning a list of games with the opponent and id
         player_games = Game.get_games_for_player(self.request.user)
 
