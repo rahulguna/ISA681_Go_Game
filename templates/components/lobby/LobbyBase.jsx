@@ -6,6 +6,8 @@ import PastGames from './PastGames'
 import Websocket from 'react-websocket'
 import $ from 'jquery'
 
+const base_url = "https://localhost/"
+
 class LobbyBase extends React.Component {
 
     constructor(props) {
@@ -21,7 +23,7 @@ class LobbyBase extends React.Component {
     }
 
     getPlayerGames(){
-        this.serverRequest = $.get('http://localhost:8080/player-games/?format=json', function (result) {
+        this.serverRequest = $.get(base_url + 'player-games/?format=json', function (result) {
            this.setState({
             player_game_list: result,
              })
@@ -29,7 +31,7 @@ class LobbyBase extends React.Component {
     }
 
     getAvailableGames(){
-        this.serverRequest = $.get('http://localhost:8080/available-games/?format=json', function (result) {
+        this.serverRequest = $.get(base_url + 'available-games/?format=json', function (result) {
            this.setState({
             available_game_list: result
              })
@@ -37,7 +39,7 @@ class LobbyBase extends React.Component {
     }
 
     getPastGames(){
-        this.serverRequest = $.get('http://localhost:8080/past-games/?format=json', function (result) {
+        this.serverRequest = $.get(base_url + 'past-games/?format=json', function (result) {
            this.setState({
             past_game_list: result
              })
