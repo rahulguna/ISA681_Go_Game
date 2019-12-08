@@ -33,7 +33,7 @@ class Game(models.Model):
     @staticmethod
     def get_past_games(user):
         from django.db.models import Q
-        return Game.objects.filter(~Q(completed=None) | Q(opponent=user) | Q(creator=user))
+        return Game.objects.filter(~Q(completed=None) & Q(opponent=user) | Q(creator=user))
 
     @staticmethod
     def created_count(user):
