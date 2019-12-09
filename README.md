@@ -1,10 +1,13 @@
+This repository contains a web-based two player game of go developed using Django and React. 
+
 ## Requirements
 
-* Django >= 1.9
+* Django = 2.2.8
 * [Django Channels](https://github.com/django/channels)
 * [Django Rest Framework](http://www.django-rest-framework.org/)
 * [Django Webpack Loader](https://github.com/owais/django-webpack-loader)
 * Node & Node Package Manager
+* PostgreSQL 11.5
 
 ## Installation
 
@@ -44,9 +47,21 @@ source venv/bin/activate		//for linux based systems
 ```
 pip3 install -r requirements.txt
 ```
+
+Edit the database connection strings in the .env.example file
+```
+cp .env.example .env
+```
+
 ```
 npm install
 ```
+
+If you get a error(ERROR: ' No module named 'django.core.urlresolvers') in handler.py file, replace that line with
+```
+from django.urls import *
+```
+
 ```
 npm install webpack@2.7.0 --save-dev
 ```
