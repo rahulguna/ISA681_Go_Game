@@ -3,8 +3,11 @@ from django.contrib.auth.models import User
 from django.db import models
 from channels import Group
 import json
-from datetime import datetime
-
+import datetime
+from datetime import timedelta
+from django.db.models import *
+from django.shortcuts import redirect
+from django.http import HttpResponse, HttpResponseNotFound, Http404,  HttpResponseRedirect
 
 class Game(models.Model):
     winner = models.ForeignKey(
@@ -81,6 +84,7 @@ class Game(models.Model):
         """
         Adds a text log associated with this game.
         """
+
         entry = GameLog(game=self, text=text, player=user).save()
         return entry
 
@@ -153,8 +157,10 @@ class Game(models.Model):
         Sets a game to completed status and records the winner
         """
         self.winner = winner
-        self.completed = datetime.now()
+        self.score = self.get_all_game_squares().filter(owner=winner).count()
+        self.completed = datetime.datetime.now()
         self.save()
+        self.send_game_update()
 
     def passChance(self, user):
         """
@@ -175,8 +181,9 @@ class Game(models.Model):
             else:
                 self.winner = self.opponent
                 self.score = opponent_count
-            self.completed = datetime.now()
+            self.completed = datetime.datetime.now()
             self.save()
+            self.add_log('{0} has won the game'.format(self.winner))
             self.send_game_update()
 
 class GameSquare(models.Model):
@@ -231,6 +238,27 @@ class GameSquare(models.Model):
         """
         Claims the square for the user
         """
+
+        log = GameLog.objects.filter(game=self.game).aggregate(Max('id'))
+        print(log)
+        if(log['id__max'] != None):
+            log2 = GameLog.objects.get(id=log['id__max'])
+
+            datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
+            date1 = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
+            date2 = log2.modified.strftime('%Y-%m-%d %H:%M:%S.%f')
+            diff = datetime.datetime.strptime(date1, datetimeFormat) - datetime.datetime.strptime(date2, datetimeFormat)
+ 
+            print("Seconds:", diff.seconds)
+
+            if(diff.seconds>120):
+                print("inside the loop ")
+                self.game.current_turn = self.game.creator if self.game.current_turn != self.game.creator else self.game.opponent
+                self.game.add_log('Game was forfeited because of session timeout. {0} has won the game'.format(self.game.current_turn))
+                self.game.send_game_update()
+                self.game.mark_complete(self.game.current_turn)
+                return
+
         self.owner = user
         self.status = status_type
         self.save(update_fields=['status', 'owner'])
@@ -238,14 +266,6 @@ class GameSquare(models.Model):
         # get surrounding squares and update them if they can be updated
         surrounding = self.get_surrounding()
 
-        #for coords in surrounding:
-            # get square by coords
-        #    square = self.game.get_square_by_coords(coords)
-
-        #    if square and square.status == 'Free':
-        #        square.status = 'Surrounding'
-        #        square.owner = user
-        #        square.save()
 
         # add log entry for move
         self.game.add_log('Square claimed at ({0}, {1}) by {2}'

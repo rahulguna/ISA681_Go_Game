@@ -6,7 +6,7 @@ from .models import Game, GameSquare
 from channels.auth import http_session_user, channel_session_user, channel_session_user_from_http
 log = logging.getLogger(__name__)
 from django.utils.decorators import method_decorator
-
+from django.contrib.sessions import *
 from channels.generic.websockets import JsonWebsocketConsumer
 
 
@@ -73,6 +73,7 @@ class GameConsumer(JsonWebsocketConsumer):
         Called when a message is received with either text or bytes
         filled out.
         """
+
         channel_session_user = True
         action = content['action']
         print("MESSAGE ON OBSTRUCTION - {0}".format(action))

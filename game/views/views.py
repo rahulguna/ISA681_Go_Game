@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 import json
+from django.contrib.sessions import *
 from django.contrib.auth import get_user
 from django.shortcuts import get_object_or_404
 
@@ -41,6 +42,9 @@ class LobbyView(TemplateView):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
+        print("My value ",request.session.get_expiry_date())
+        #if(request.session.get_expiry_age()<10):
+        #    return redirect('/logout/')
         return super(LobbyView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
