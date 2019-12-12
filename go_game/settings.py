@@ -102,6 +102,10 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {'NAME': 'game.validators.CustomPasswordValidator.NumberValidator', },
+    {'NAME': 'game.validators.CustomPasswordValidator.UppercaseValidator', },
+    {'NAME': 'game.validators.CustomPasswordValidator.LowercaseValidator', },
+    {'NAME': 'game.validators.CustomPasswordValidator.SymbolValidator', },
 ]
 
 
