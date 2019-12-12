@@ -251,7 +251,7 @@ class GameSquare(models.Model):
  
             print("Seconds:", diff.seconds)
 
-            if(diff.seconds>120):
+            if(diff.seconds>180):
                 print("inside the loop ")
                 self.game.current_turn = self.game.creator if self.game.current_turn != self.game.creator else self.game.opponent
                 self.game.add_log('Game was forfeited because of session timeout. {0} has won the game'.format(self.game.current_turn))
