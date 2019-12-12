@@ -23,6 +23,9 @@ const paddingBottom = {
 const fontColor = {
     'color':'red',
 };
+const backgroundColor = {
+    'background':'#4a4949',
+};
 const base_url = "https://localhost/"
 
 class GameBoard extends Component {
@@ -175,8 +178,8 @@ class GameBoard extends Component {
                             <h4>Pass Your turn:</h4>
                         </div> 
                         <div className="col-sm-7" style={noPadding}>
-                            <span className="input-group-btn">
-                                <button className="btn btn-default" onClick={this.passChance} type="button">Pass</button>
+                            <span className="form-actions">
+                                <button className="btn btn-primary" style={backgroundColor} onClick={this.passChance} type="button">Pass</button>
                             </span>
                         </div> 
                     </div>

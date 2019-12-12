@@ -6,6 +6,13 @@ const paddingbottom = {
 const marginTop = {
   'margin-top':'5px',
 };
+const backgroundColor = {
+    'background':'#4a4949',
+};
+const bordorColor = {
+    'border-color': '#4a4949',
+};
+
 
 class PastGames extends React.Component {
     constructor(props) {
@@ -34,7 +41,7 @@ class PastGames extends React.Component {
                     return <li key={game.id} className="list-group-item" style={paddingbottom}>
                         <span className="badge pull-left" style={marginTop}>{game.id}</span>&nbsp; &nbsp;
                         <span>{game.creator.username} vs {game.opponent.username}</span>
-                        <a className="btn btn-sm btn-primary pull-right" href={"/game/"+game.id+"/"}>View</a>
+                        <a className="btn btn-sm btn-primary pull-right" style={backgroundColor} href={"/game/"+game.id+"/"}>View</a>
                     </li>
             }, this)
 
@@ -46,8 +53,8 @@ class PastGames extends React.Component {
     render() {
         return (
             <div>
-                <div className="panel panel-primary">
-                    <div className="panel-heading">
+                <div className="panel panel-primary" style={bordorColor}>
+                    <div className="panel-heading" style={backgroundColor}>
                         <span>Past Games</span>
                     </div>
                     <div className="panel-body">

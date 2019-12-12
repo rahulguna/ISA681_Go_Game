@@ -6,6 +6,15 @@ const paddingbottom = {
 const marginTop = {
   'margin-top':'5px',
 };
+const backgroundColor = {
+    'background':'#4a4949',
+};
+const bordorColor = {
+    'border-color': '#4a4949',
+};
+const fontColor = {
+    'color': '#4a4949',
+};
 
 class PlayerGames extends React.Component{
   constructor(props) {
@@ -60,7 +69,7 @@ class PlayerGames extends React.Component{
                                 <span className="badge pull-left" style={marginTop}>{game.id}</span>&nbsp;&nbsp;
                                 <span>{game.creator.username}</span> vs <span>{this.renderOpponent(game)}</span>
 
-                                <a className="btn btn-sm btn-primary pull-right" href={"/game/"+game.id+"/"}>{this.renderButton(game)}</a>
+                                <a className="btn btn-sm btn-primary pull-right" style={backgroundColor} href={"/game/"+game.id+"/"}>{this.renderButton(game)}</a>
                             </li>
                     }, this)
 
@@ -72,10 +81,10 @@ class PlayerGames extends React.Component{
     render() {
       return (
         <div>
-          <div className="panel panel-primary">
-                <div className="panel-heading">
+          <div className="panel panel-primary" style={bordorColor}>
+                <div className="panel-heading" style={backgroundColor}>
                     <span>Current Games</span>
-                    <a href="#" className="pull-right badge" onClick={this.onCreateGameClick} id="create_game">Start New Game</a>
+                    <a href="#" className="pull-right badge" style={fontColor} onClick={this.onCreateGameClick} id="create_game">Start New Game</a>
                 </div>
                 <div className="panel-body">
                     <div>
