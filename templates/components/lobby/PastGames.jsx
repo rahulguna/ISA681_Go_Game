@@ -36,16 +36,32 @@ class PastGames extends React.Component {
         }, this);
         
         
-        if (player_removed.length > 0) {
-            return player_removed.map(function (game) {
+        if (player_removed.length > 0) 
+        {
+            return player_removed.map(function (game) 
+            {
+                if(game.winner.id == this.props.player.id)
+                {
                     return <li key={game.id} className="list-group-item" style={paddingbottom}>
                         <span className="badge pull-left" style={marginTop}>{game.id}</span>&nbsp; &nbsp;
-                        <span>{game.creator.username} vs {game.opponent.username}</span>
+                        <span>{game.creator.username} vs {game.opponent.username}</span>&nbsp; &nbsp;&nbsp; &nbsp;
+                        <span className="glyphicon glyphicon-flag"></span>&nbsp; &nbsp;
                         <a className="btn btn-sm btn-primary pull-right" style={backgroundColor} href={"/game/"+game.id+"/"}>View</a>
                     </li>
+                }
+                else
+                {
+                    return <li key={game.id} className="list-group-item" style={paddingbottom}>
+                        <span className="badge pull-left" style={marginTop}>{game.id}</span>&nbsp; &nbsp;
+                        <span>{game.creator.username} vs {game.opponent.username}</span>&nbsp; &nbsp;&nbsp; &nbsp;
+                        <a className="btn btn-sm btn-primary pull-right" style={backgroundColor} href={"/game/"+game.id+"/"}>View</a>
+                    </li>
+                }
             }, this)
 
-        } else {
+        } 
+        else 
+        {
             return ("No Past Games")
         }
     }

@@ -246,7 +246,7 @@ class GameSquare(models.Model):
 
             datetimeFormat = '%Y-%m-%d %H:%M:%S.%f'
             date1 = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f')
-            date2 = log2.modified.strftime('%Y-%m-%d %H:%M:%S.%f')
+            date2 = log2.created.strftime('%Y-%m-%d %H:%M:%S.%f')
             diff = datetime.datetime.strptime(date1, datetimeFormat) - datetime.datetime.strptime(date2, datetimeFormat)
  
             print("Seconds:", diff.seconds)
@@ -287,7 +287,6 @@ class GameLog(models.Model):
     player = models.ForeignKey(User, null=True, blank=True, on_delete=models.DO_NOTHING)
 
     created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
 
     def __unicode__(self):
         return 'Game #{0} Log'.format(self.game.id)
