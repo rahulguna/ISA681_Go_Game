@@ -57,17 +57,23 @@ cp .env.example .env
 npm install
 ```
 
-If you get a error(ERROR: ' No module named 'django.core.urlresolvers') in handler.py file, replace that line with
-```
-from django.urls import *
-```
-
 ```
 npm install webpack@2.7.0 --save-dev
 ```
 ```
 python3 manage.py migrate
 ```
+
+If you get a error(ERROR: ' No module named 'django.core.urlresolvers') in handler.py file, replace the line 
+```
+from django.core.urlresolvers import set_script_prefix
+```
+
+with
+```
+from django.urls import *
+```
+
 
 ## Run the server
 ```
