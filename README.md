@@ -2,7 +2,7 @@ This repository contains a web-based two player game of go developed using Djang
 
 ## Documents
 [Report.pdf](https://github.com/rahulguna/ISA681_Go_Game/blob/master/Assurance_Report.pdf) | 
-[GameOfGo.mp4](https://youtu.be/WdWUqL9JxZI)
+[GameDemo.mp4](https://youtu.be/WdWUqL9JxZI)
 
 ## Requirements
 
