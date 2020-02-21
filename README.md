@@ -1,7 +1,7 @@
 This repository contains a web-based two player game of go developed using Django and React. 
 
 ## Documents
-[Report.pdf](https://github.com/Report.pdf)
+[Report.pdf](https://github.com/rahulguna/ISA681_Go_Game/blob/master/Assurance_Report.pdf) | 
 [GameOfGo.mp4](https://youtu.be/WdWUqL9JxZI)
 
 ## Requirements
